@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Star, Clock, Globe, Users, ChevronLeft } from 'lucide-react';
+import { Play, Star, Clock, Globe, Users, ChevronLeft, Camera} from 'lucide-react';
 
 interface Movie {
   id: string;
@@ -18,6 +18,7 @@ interface Movie {
   country: string;
   casts: string;
   watchLink: string;
+  production?: string;
 }
 
 export default function MoviePage() {
@@ -85,7 +86,7 @@ export default function MoviePage() {
       />
 
       {/* Movie Content Card */}
-      <div className="relative z-10 flex flex-col md:flex-row gap-10 max-w-screen-xl w-full bg-black/70 p-8 rounded-lg shadow-lg backdrop-blur-sm">
+      <div className="relative z-5 flex flex-col md:flex-row gap-10 max-w-screen-xl w-full bg-black/50 p-8 rounded-lg shadow-lg backdrop-blur-sm">
         {/* Poster */}
         <div className="md:w-1/3 lg:w-1/4">
           <div className="aspect-[2/3] relative rounded-lg overflow-hidden shadow-2xl">
@@ -121,6 +122,14 @@ export default function MoviePage() {
             </div>
           </div>
 
+           {/* Overview */}
+           <div className="space-y-2 pt-4">
+            <h2 className="text-xs font-medium text-gray-400">Overview</h2>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              {movie.overview || 'No overview available.'}
+            </p>
+          </div>
+
           {/* Movie Info Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
             {movie.released && (
@@ -150,6 +159,8 @@ export default function MoviePage() {
                 </div>
               </div>
             )}
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
             {movie.casts && (
               <div className="flex items-start gap-2">
                 <Users className="w-4 h-4 text-gray-400 mt-0.5" />
@@ -159,15 +170,19 @@ export default function MoviePage() {
                 </div>
               </div>
             )}
-          </div>
-
-          {/* Overview */}
-          <div className="space-y-2 pt-4">
-            <h2 className="text-xs font-medium text-gray-400">Overview</h2>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              {movie.overview || 'No overview available.'}
-            </p>
-          </div>
+          
+ {/* 3) Add Production block here */}
+ {movie.production && (
+              <div className="flex items-start gap-2">
+                <Camera className="w-4 h-4 text-gray-400 mt-0.5" />
+                <div className="min-w-0">
+                  <p className="text-gray-400">Production</p>
+                  <p className="text-white">{movie.production}</p>
+                </div>
+              </div>
+            )}
+            
+         </div>
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 pt-4">
