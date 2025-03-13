@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Play, Star, Clock, Globe, Users, ChevronLeft, Camera} from 'lucide-react';
+import Like from './like';
 
 interface Movie {
   id: string;
@@ -122,8 +123,8 @@ export default function MoviePage() {
             </div>
           </div>
 
-           {/* Overview */}
-           <div className="space-y-2 pt-4">
+          {/* Overview */}
+          <div className="space-y-2 pt-4">
             <h2 className="text-xs font-medium text-gray-400">Overview</h2>
             <p className="text-gray-300 text-sm leading-relaxed">
               {movie.overview || 'No overview available.'}
@@ -170,9 +171,7 @@ export default function MoviePage() {
                 </div>
               </div>
             )}
-          
- {/* 3) Add Production block here */}
- {movie.production && (
+            {movie.production && (
               <div className="flex items-start gap-2">
                 <Camera className="w-4 h-4 text-gray-400 mt-0.5" />
                 <div className="min-w-0">
@@ -181,8 +180,7 @@ export default function MoviePage() {
                 </div>
               </div>
             )}
-            
-         </div>
+          </div>
 
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 pt-4">
@@ -192,16 +190,8 @@ export default function MoviePage() {
                 action="https://bti.btcpayprovider.com/api/v1/invoices"
                 className="btcpay-form btcpay-form--block"
               >
-                <input
-                  type="hidden"
-                  name="storeId"
-                  value="CB1xxE78rsSdJ5oee6PZbu3jU5WPc4FWVd78X3DKMJ79"
-                />
-                <input 
-                  type="hidden" 
-                  name="browserRedirect" 
-                  value={`${movie.watchLink.replace("/movie/", "/watch-movie/")}.${movie.id}`} 
-                />
+                <input type="hidden" name="storeId" value="CB1xxE78rsSdJ5oee6PZbu3jU5WPc4FWVd78X3DKMJ79" />
+                <input type="hidden" name="browserRedirect" value={`${movie.watchLink.replace("/movie/", "/watch-movie/")}.${movie.id}`} />
                 <input type="hidden" name="price" value=".5" />
                 <input type="hidden" name="currency" value="USD" />
                 <input type="hidden" name="defaultPaymentMethod" value="BTC-LN" />
@@ -241,9 +231,12 @@ export default function MoviePage() {
               <div className="text-gray-400 text-xs">Loading payment options...</div>
             )}
           </div>
-
         </div>
       </div>
+
+      {/* Add Like component */}
+      {movie && <Like currentMovie={movie} excludeCurrentMovie={true} />}
     </div>
   );
 }
+
