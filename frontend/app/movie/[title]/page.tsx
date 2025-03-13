@@ -54,7 +54,7 @@ export default function MoviePage() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-black/70">
+      <div className="flex justify-center items-center min-h-screen bg-black/50">
         <div className="space-y-2 text-center">
           <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="text-gray-400 text-xs">Loading movie details...</p>
@@ -65,7 +65,7 @@ export default function MoviePage() {
 
   if (!movie) {
     return (
-      <div className="flex flex-col justify-center items-center min-h-screen bg-black/70">
+      <div className="flex flex-col justify-center items-center min-h-screen bg-black/50">
         <h1 className="text-gray-400 text-sm mb-4">Movie not found</h1>
         <button
           onClick={() => router.push('/')}
@@ -79,17 +79,17 @@ export default function MoviePage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-black text-white flex justify-center items-center px-6">
+    <div className="relative min-h-screen bg-black text-white flex flex-col items-center px-6 py-8">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-50"
+        className="absolute inset-0 bg-cover bg-center opacity-80"
         style={{ backgroundImage: `url(${movie.backgroundUrl})` }}
       />
 
-      {/* Movie Content Card */}
-      <div className="relative z-5 flex flex-col md:flex-row gap-10 max-w-screen-xl w-full bg-black/50 p-8 rounded-lg shadow-lg backdrop-blur-sm">
+      {/* Movie Content Card - reduced by 20% */}
+      <div className="relative z-5 flex flex-col md:flex-row gap-8 w-4/5 max-w-[1000px] bg-black/60 p-6 rounded-lg shadow-lg backdrop-blur-sm">
         {/* Poster */}
-        <div className="md:w-1/3 lg:w-1/4">
+        <div className="md:w-1/4">
           <div className="aspect-[2/3] relative rounded-lg overflow-hidden shadow-2xl">
             <img 
               src={movie.thumbnailUrl}
@@ -100,10 +100,10 @@ export default function MoviePage() {
         </div>
 
         {/* Movie Details */}
-        <div className="flex-1 space-y-6">
+        <div className="flex-1 space-y-4">
           {/* Title and Tags */}
-          <div className="space-y-4">
-            <h1 className="text-2xl md:text-4xl font-bold">{movie.title}</h1>
+          <div className="space-y-3">
+            <h1 className="text-xl md:text-3xl font-bold">{movie.title}</h1>
             <div className="flex flex-wrap gap-2 text-[10px]">
               {movie.quality && (
                 <span className="bg-blue-500 text-white px-2 py-0.5 rounded">
@@ -117,69 +117,64 @@ export default function MoviePage() {
               )}
               {movie.rating && (
                 <span className="bg-orange-500 text-white px-2 py-0.5 rounded flex items-center gap-1">
-                  IMDB: {movie.rating}
+                  ★ {movie.rating}
                 </span>
               )}
             </div>
           </div>
 
           {/* Overview */}
-          <div className="space-y-2 pt-4">
-            <h2 className="text-xs font-medium text-gray-400">Overview</h2>
-            <p className="text-gray-300 text-sm leading-relaxed">
+          <div className="grid-cols-2 sm:grid-cols-4 gap-4 text-[11px]">
+            <h4 className="text-xs font-medium text-gray-400">Overview</h4>
+            <p className="text-gray-300">
               {movie.overview || 'No overview available.'}
             </p>
           </div>
 
           {/* Movie Info Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-            {movie.released && (
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <div>
-                  <p className="text-gray-400">Release Date</p>
-                  <p className="text-white">{new Date(movie.released).toLocaleDateString()}</p>
-                </div>
-              </div>
-            )}
-            {movie.duration && (
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-gray-400" />
-                <div>
-                  <p className="text-gray-400">Duration</p>
-                  <p className="text-white">{movie.duration} min</p>
-                </div>
-              </div>
-            )}
-            {movie.country && (
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-gray-400" />
-                <div>
-                  <p className="text-gray-400">Country</p>
-                  <p className="text-white">{movie.country}</p>
-                </div>
-              </div>
-            )}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-[10px]">
+        {movie.released && (
+          <div className="flex items-center gap-2">
+            <Clock className="w-3 h-3 text-gray-400" />
+            <div>
+              <p className="text-gray-400">Release Date</p>
+              <p className="text-gray-400">
+                {new Date(movie.released).toLocaleDateString()}
+              </p>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-            {movie.casts && (
-              <div className="flex items-start gap-2">
-                <Users className="w-4 h-4 text-gray-400 mt-0.5" />
-                <div className="min-w-0">
-                  <p className="text-gray-400">Cast</p>
-                  <p className="text-white text-wrap break-words">{movie.casts}</p>
-                </div>
-              </div>
-            )}
-            {movie.production && (
-              <div className="flex items-start gap-2">
-                <Camera className="w-4 h-4 text-gray-400 mt-0.5" />
-                <div className="min-w-0">
-                  <p className="text-gray-400">Production</p>
-                  <p className="text-white">{movie.production}</p>
-                </div>
-              </div>
-            )}
+          </div>
+        )}
+        {movie.duration && (
+          <div className="flex items-center gap-2">
+            <Clock className="w-3 h-3 text-gray-400" />
+            <div>
+              <p className="text-gray-400">Duration</p>
+              <p className="text-gray-400">{movie.duration} min</p>
+            </div>
+          </div>
+        )}
+        {movie.country && (
+          <div className="flex items-center gap-2">
+            <Globe className="w-3 h-3 text-gray-400" />
+            <div>
+              <p className="text-gray-400">Country</p>
+              <p className="text-gray-400">{movie.country}</p>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="grid-cols-2 sm:grid-cols-4 gap-4 text-[10px]">
+            <h3 className="text-xs font-medium text-gray-400">Cast</h3>
+            <p className="text-gray-400">
+              {movie.casts || 'No overview available.'}
+            </p>
+          </div>
+
+          <div className="grid-cols-2 sm:grid-cols-4 gap-4 text-[10px]">
+            <h3 className="text-xs font-medium text-gray-400">Prodaction</h3>
+            <p className="text-gray-400">
+              {movie.production || 'No Prodaction available.'}
+            </p>
           </div>
 
           {/* Action Buttons */}
@@ -191,10 +186,14 @@ export default function MoviePage() {
                 className="btcpay-form btcpay-form--block"
               >
                 <input type="hidden" name="storeId" value="CB1xxE78rsSdJ5oee6PZbu3jU5WPc4FWVd78X3DKMJ79" />
-                <input type="hidden" name="browserRedirect" value={`${movie.watchLink.replace("/movie/", "/watch-movie/")}.${movie.id}`} />
-                <input type="hidden" name="price" value=".5" />
-                <input type="hidden" name="currency" value="USD" />
-                <input type="hidden" name="defaultPaymentMethod" value="BTC-LN" />
+  <input type="hidden" name="orderId" value= {movie.id} />
+  <input type="hidden" name="checkoutDesc" value= {movie.title} />
+  <input type="hidden" name="serverIpn" value="https://btiflix.com/api/btcpay-webhook" />
+  <input type="hidden" name="browserRedirect" value={`${movie.watchLink.replace("/movie/", "/watch-movie/")}.${movie.id}`} />
+  <input type="hidden" name="checkoutQueryString" value="query string parameters " />
+  <input type="hidden" name="price" value="0.25" />
+  <input type="hidden" name="currency" value="USD" />
+  <input type="hidden" name="defaultPaymentMethod" value="BTC-LN" />
 
                 <button
                   type="submit"
@@ -234,8 +233,10 @@ export default function MoviePage() {
         </div>
       </div>
 
-      {/* Add Like component */}
-      {movie && <Like currentMovie={movie} excludeCurrentMovie={true} />}
+      {/* Like component */}
+      <div className="relative z-4 w-4/5 max-w-[1000px] mt-5">
+        {movie && <Like currentMovie={movie} excludeCurrentMovie={true} />}
+      </div>
     </div>
   );
 }

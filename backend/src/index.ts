@@ -35,6 +35,29 @@ app.post("/api/payments/create", ((req: Request, res: Response) => {
   }
 }) as RequestHandler);
 
+// ✅ BTCPay Server Webhook Endpoint
+app.post("/api/btcpay-webhook", async (req: Request, res: Response) => {
+  try {
+    console.log('Received BTCPay webhook:', req.body);
+    
+    const { invoiceId, status, price, orderId } = req.body;
+    
+    // Save transaction to database
+    const result = await pool.query(
+      `INSERT INTO transactions (movie_id, invoice_id, amount, status)
+       VALUES ($1, $2, $3, $4)
+       RETURNING *`,
+      [orderId, invoiceId, price, status]
+    );
+
+    console.log('Transaction saved:', result.rows[0]);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('BTCPay Webhook Error:', error);
+    res.status(500).json({ error: 'Failed to process payment notification' });
+  }
+});
+
 // ✅ Movies Route with Search
 app.get("/api/movies", async (req: Request, res: Response) => {
   try {
