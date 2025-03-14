@@ -1,14 +1,14 @@
 import React from 'react'
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import Navigation from '../components/Navigation'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Movies for sats',
-  description: 'Watch movies from multiple platforms in one place',
+  title: 'BTIFLIX - Watch Movies with Bitcoin',
+  description: 'Watch your favorite movies using Bitcoin Lightning Network',
   icons: {
     icon: [
       {
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     ],
   },
   manifest: '/manifest.json',
-  themeColor: '#1f2937', // This matches your gray-900 background
+  themeColor: '#ff7f1e',
   openGraph: {
     type: 'website',
     title: 'Btiflix - Movie Streaming Aggregator',
@@ -59,6 +59,12 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  themeColor: '#ff7f1e',
+  width: 'device-width',
+  initialScale: 1,
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -72,4 +78,4 @@ export default function RootLayout({
       </body>
     </html>
   )
-} 
+}

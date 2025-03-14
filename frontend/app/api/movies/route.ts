@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const quality = searchParams.get('quality')?.trim();
     const rating = searchParams.get('min_rating')?.trim();
     const year = searchParams.get('release_year')?.trim();
-    const limit = searchParams.get('limit') || '10'; // Default limit for initial load
+    const limit = searchParams.get('limit') || '110'; // Default limit for initial load
 
     // Build query parameters for backend
     const queryParams = new URLSearchParams();

@@ -17,14 +17,32 @@ CREATE TABLE movies (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS transactions;
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY,
+    invoice_id VARCHAR(255) UNIQUE NOT NULL,
     movie_id VARCHAR(255) REFERENCES movies(id),
-    invoice_id VARCHAR(255) NOT NULL,
-    amount INTEGER NOT NULL,
+    movie_title VARCHAR(255) NOT NULL,
+    amount DECIMAL(20, 8) NOT NULL,
+    currency VARCHAR(10) NOT NULL,
     status VARCHAR(50) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    manually_marked BOOLEAN DEFAULT false,
+    over_paid BOOLEAN DEFAULT false,
+    delivery_id VARCHAR(255),
+    webhook_id VARCHAR(255),
+    original_delivery_id VARCHAR(255),
+    is_redelivery BOOLEAN DEFAULT false,
+    webhook_type VARCHAR(50),
+    timestamp BIGINT,
+    store_id VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Create indexes for transactions table
+CREATE INDEX idx_transactions_invoice_id ON transactions(invoice_id);
+CREATE INDEX idx_transactions_movie_id ON transactions(movie_id);
+CREATE INDEX idx_transactions_status ON transactions(status);
 
 -- Scraper Progress Tracking
 CREATE TABLE scraper_progress (

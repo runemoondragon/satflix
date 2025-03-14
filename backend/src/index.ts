@@ -38,22 +38,78 @@ app.post("/api/payments/create", ((req: Request, res: Response) => {
 // ✅ BTCPay Server Webhook Endpoint
 app.post("/api/btcpay-webhook", async (req: Request, res: Response) => {
   try {
-    console.log('Received BTCPay webhook:', req.body);
+    console.log('=================== BTCPAY WEBHOOK DEBUG ===================');
+    console.log('Full request body:', JSON.stringify(req.body, null, 2));
     
-    const { invoiceId, status, price, orderId } = req.body;
-    
-    // Save transaction to database
+    const { 
+      manuallyMarked,
+      overPaid,
+      deliveryId,
+      webhookId,
+      originalDeliveryId,
+      isRedelivery,
+      type,
+      timestamp,
+      storeId,
+      invoiceId,
+      metadata
+    } = req.body;
+
+    if (!metadata?.movieId || !metadata?.movieTitle || !invoiceId) {
+      throw new Error('Missing required webhook data');
+    }
+
+    // Save/update transaction in database
     const result = await pool.query(
-      `INSERT INTO transactions (movie_id, invoice_id, amount, status)
-       VALUES ($1, $2, $3, $4)
-       RETURNING *`,
-      [orderId, invoiceId, price, status]
+      `INSERT INTO transactions (
+        movie_id,
+        movie_title,
+        invoice_id,
+        amount,
+        currency,
+        status,
+        manually_marked,
+        over_paid,
+        delivery_id,
+        webhook_id,
+        original_delivery_id,
+        is_redelivery,
+        webhook_type,
+        timestamp,
+        store_id
+      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+      ON CONFLICT (invoice_id) 
+      DO UPDATE SET 
+        status = $6,
+        manually_marked = $7,
+        over_paid = $8,
+        updated_at = CURRENT_TIMESTAMP
+      RETURNING *`,
+      [
+        metadata.movieId,
+        metadata.movieTitle,
+        invoiceId,
+        0.25, // Fixed amount for now
+        'USD',
+        'completed', // Since we're only handling InvoiceSettled
+        manuallyMarked,
+        overPaid,
+        deliveryId,
+        webhookId,
+        originalDeliveryId,
+        isRedelivery,
+        type,
+        timestamp,
+        storeId
+      ]
     );
 
-    console.log('Transaction saved:', result.rows[0]);
+    console.log('Transaction saved/updated:', result.rows[0]);
     res.json({ success: true });
   } catch (error) {
     console.error('BTCPay Webhook Error:', error);
+    console.error('Full webhook body:', JSON.stringify(req.body, null, 2));
     res.status(500).json({ error: 'Failed to process payment notification' });
   }
 });

@@ -30,6 +30,7 @@ export default function MoviePage() {
 
   const [movie, setMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   useEffect(() => {
     if (!formattedTitle) return;
@@ -180,52 +181,89 @@ export default function MoviePage() {
           {/* Action Buttons */}
           <div className="flex flex-wrap gap-4 pt-4">
             {movie?.watchLink && movie?.id ? (
-              <form
-                method="POST"
-                action="https://bti.btcpayprovider.com/api/v1/invoices"
-                className="btcpay-form btcpay-form--block"
-              >
-                <input type="hidden" name="storeId" value="CB1xxE78rsSdJ5oee6PZbu3jU5WPc4FWVd78X3DKMJ79" />
-  <input type="hidden" name="orderId" value= {movie.id} />
-  <input type="hidden" name="checkoutDesc" value= {movie.title} />
-  <input type="hidden" name="serverIpn" value="https://btiflix.com/api/btcpay-webhook" />
-  <input type="hidden" name="browserRedirect" value={`${movie.watchLink.replace("/movie/", "/watch-movie/")}.${movie.id}`} />
-  <input type="hidden" name="checkoutQueryString" value="query string parameters " />
-  <input type="hidden" name="price" value="0.25" />
-  <input type="hidden" name="currency" value="USD" />
-  <input type="hidden" name="defaultPaymentMethod" value="BTC-LN" />
+              <button
+                onClick={async () => {
+                  try {
+                    setPaymentLoading(true);
+                    console.log('Sending payment request with data:', {
+                      movieId: movie.id,
+                      movieTitle: movie.title,
+                      watchLink: movie.watchLink
+                    });
 
-                <button
-                  type="submit"
-                  className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full text-xs font-medium transition-all shadow-lg"
-                  style={{
-                    minWidth: "140px",
-                    minHeight: "40px",
-                    borderRadius: "30px",
-                    border: "none",
-                    backgroundColor: "#ff7f1e",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    padding: "10px 20px",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                  }}
-                  title="Pay with BTCPay Server, a Self-Hosted Bitcoin Payment Processor"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="white"
-                    className="w-4 h-4"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 3l14 9-14 9V3z" />
-                  </svg>
-                  Watch Now
-                </button>
-              </form>
+                    const response = await fetch('/api/payments', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json'
+                      },
+                      body: JSON.stringify({
+                        movieId: movie.id,
+                        movieTitle: movie.title,
+                        amount: '0.25',
+                        currency: 'USD',
+                        watchLink: movie.watchLink
+                      })
+                    });
+
+                    if (!response.ok) {
+                      const errorData = await response.json();
+                      console.error('Payment request failed:', errorData);
+                      throw new Error(errorData.error || 'Failed to create invoice');
+                    }
+
+                    const data = await response.json();
+                    console.log('Payment response:', data);
+                    
+                    if (!data.checkoutLink) {
+                      throw new Error('No checkout link received from BTCPay');
+                    }
+
+                    console.log('Redirecting to:', data.checkoutLink);
+                    window.location.href = data.checkoutLink;
+                  } catch (error: any) {
+                    console.error('Payment error:', error);
+                    alert(error.message || 'Failed to initiate payment. Please try again.');
+                  } finally {
+                    setPaymentLoading(false);
+                  }
+                }}
+                disabled={paymentLoading}
+                className={`flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-full text-xs font-medium transition-all shadow-lg ${paymentLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                style={{
+                  minWidth: "140px",
+                  minHeight: "40px",
+                  borderRadius: "30px",
+                  border: "none",
+                  backgroundColor: "#ff7f1e",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "10px 20px",
+                  fontWeight: "bold",
+                  cursor: paymentLoading ? "not-allowed" : "pointer",
+                }}
+              >
+                {paymentLoading ? (
+                  <div className="flex items-center gap-2">
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Processing...</span>
+                  </div>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      stroke="white"
+                      className="w-4 h-4"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 3l14 9-14 9V3z" />
+                    </svg>
+                    Watch Now
+                  </>
+                )}
+              </button>
             ) : (
               <div className="text-gray-400 text-xs">Loading payment options...</div>
             )}
