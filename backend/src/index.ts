@@ -7,16 +7,44 @@ dotenv.config();
 
 const app = express();
 
+// Cache for movie data (lasts 5 minutes)
+const movieCache = new Map();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+
 // ✅ Middleware
 app.use(express.json()); // Parse JSON requests
 app.use(cors()); // Allow frontend requests
+
+// Add response caching middleware
+const cacheResponse = (duration: number): RequestHandler => {
+  return (req, res, next) => {
+    const key = req.originalUrl;
+    const cachedResponse = movieCache.get(key);
+
+    if (cachedResponse && cachedResponse.timestamp > Date.now() - duration) {
+      res.json(cachedResponse.data);
+      return;
+    }
+
+    const originalJson = res.json;
+    res.json = function(data: any) {
+      movieCache.set(key, {
+        data,
+        timestamp: Date.now()
+      });
+      return originalJson.call(this, data);
+    };
+
+    next();
+  };
+};
 
 // ✅ Health Check Route
 app.get("/", ((req: Request, res: Response) => {
   res.send("⚡ BTIFLIX Backend is Running!");
 }) as RequestHandler);
 
-// ✅ Payment Route (Mock BTCPay API)
+// ✅ Payment Route with optimizations
 app.post("/api/payments/create", ((req: Request, res: Response) => {
   try {
     const { movieId, amount } = req.body;
@@ -38,9 +66,6 @@ app.post("/api/payments/create", ((req: Request, res: Response) => {
 // ✅ BTCPay Server Webhook Endpoint
 app.post("/api/btcpay-webhook", async (req: Request, res: Response) => {
   try {
-    console.log('=================== BTCPAY WEBHOOK DEBUG ===================');
-    console.log('Full request body:', JSON.stringify(req.body, null, 2));
-    
     const { 
       manuallyMarked,
       overPaid,
@@ -90,9 +115,9 @@ app.post("/api/btcpay-webhook", async (req: Request, res: Response) => {
         metadata.movieId,
         metadata.movieTitle,
         invoiceId,
-        0.25, // Fixed amount for now
+        0.25,
         'USD',
-        'completed', // Since we're only handling InvoiceSettled
+        'completed',
         manuallyMarked,
         overPaid,
         deliveryId,
@@ -105,30 +130,27 @@ app.post("/api/btcpay-webhook", async (req: Request, res: Response) => {
       ]
     );
 
-    console.log('Transaction saved/updated:', result.rows[0]);
     res.json({ success: true });
   } catch (error) {
     console.error('BTCPay Webhook Error:', error);
-    console.error('Full webhook body:', JSON.stringify(req.body, null, 2));
     res.status(500).json({ error: 'Failed to process payment notification' });
   }
 });
 
-// ✅ Movies Route with Search
-app.get("/api/movies", async (req: Request, res: Response) => {
+// ✅ Movies Route with Search and Caching
+app.get("/api/movies", cacheResponse(CACHE_DURATION), async (req: Request, res: Response) => {
   try {
     const { q } = req.query;
     
     let query = "SELECT * FROM movies";
     const params: any[] = [];
 
-    // Add search condition if search term is provided
     if (q && typeof q === 'string' && q.trim()) {
       query += " WHERE LOWER(title) LIKE LOWER($1)";
       params.push(`%${q.trim()}%`);
     }
 
-    // Add limit
+    // Add index hints and limit
     query += " LIMIT 6501";
 
     const result = await pool.query(query, params);
