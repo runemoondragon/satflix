@@ -143,14 +143,14 @@ export default function HeroSlider() {
                 </span>
               )}
               {mainMovie?.genre && (
-                <span className="bg-gray-800 text-white px-2 py-0.5 rounded text-[10px] font-medium">
+                <span className="bg-gray-800 text-white px-2 py-0.8 rounded text-[10px] font-medium">
                   {mainMovie.genre}
                 </span>
               )}
             </div>
 
             <h1 className="text-2xl md:text-4xl font-bold mb-2">{mainMovie?.title}</h1>
-            <p className="text-gray-300 text-xs md:text-sm max-w-2xl mb-6 line-clamp-3">
+            <p className="text-gray-200 text-sm md:text-sm max-w-2xl mb-6 line-clamp-3">
               {mainMovie?.overview || 'No description available.'}
             </p>
 
