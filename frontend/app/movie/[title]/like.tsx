@@ -44,12 +44,18 @@ export default function Like({ currentMovie, excludeCurrentMovie }: LikeProps) {
           throw new Error('Invalid response format')
         }
 
+        // Filter movies by date range (2010-2025)
+        const recentMovies = data.filter(movie => {
+          const releaseYear = movie.released ? new Date(movie.released).getFullYear() : 0;
+          return releaseYear >= 2000 && releaseYear <= 2025;
+        });
+
         // Progressive filtering
         let filteredMovies: Movie[] = []
         const targetCount = 10
 
         // Step 1: Exact matches (same genre and similar rating)
-        filteredMovies = data.filter(movie => {
+        filteredMovies = recentMovies.filter(movie => {
           if (excludeCurrentMovie && movie.id === currentMovie.id) return false
           
           // Match genre
@@ -66,7 +72,7 @@ export default function Like({ currentMovie, excludeCurrentMovie }: LikeProps) {
         // Step 2: If needed, add movies with same genre but wider rating range
         if (filteredMovies.length < targetCount) {
           const remainingCount = targetCount - filteredMovies.length
-          const sameGenreMovies = data.filter(movie => {
+          const sameGenreMovies = recentMovies.filter(movie => {
             if (excludeCurrentMovie && movie.id === currentMovie.id) return false
             if (filteredMovies.some(m => m.id === movie.id)) return false
             return movie.genre?.includes(currentMovie.genre)
@@ -78,7 +84,7 @@ export default function Like({ currentMovie, excludeCurrentMovie }: LikeProps) {
         // Step 3: If still needed, add movies with similar rating
         if (filteredMovies.length < targetCount) {
           const remainingCount = targetCount - filteredMovies.length
-          const similarRatingMovies = data.filter(movie => {
+          const similarRatingMovies = recentMovies.filter(movie => {
             if (excludeCurrentMovie && movie.id === currentMovie.id) return false
             if (filteredMovies.some(m => m.id === movie.id)) return false
             
@@ -93,7 +99,7 @@ export default function Like({ currentMovie, excludeCurrentMovie }: LikeProps) {
         // Step 4: If still not enough, add any remaining movies
         if (filteredMovies.length < targetCount) {
           const remainingCount = targetCount - filteredMovies.length
-          const anyMovies = data.filter(movie => {
+          const anyMovies = recentMovies.filter(movie => {
             if (excludeCurrentMovie && movie.id === currentMovie.id) return false
             return !filteredMovies.some(m => m.id === movie.id)
           }).slice(0, remainingCount)

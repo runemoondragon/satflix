@@ -124,7 +124,7 @@ export default function MovieGrid() {
             if (section.title !== 'Box Office #1\'s') {
               availableMovies = availableMovies.filter(movie => {
                 const releaseYear = movie.released ? new Date(movie.released).getFullYear() : 0;
-                return releaseYear >= 2010 && releaseYear <= 2025;
+                return releaseYear >= 2015 && releaseYear <= 2025;
               });
             }
             
