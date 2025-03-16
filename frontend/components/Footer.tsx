@@ -9,9 +9,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Logo and Copyright */}
           <div className="text-center md:text-left">
-            <h3 className="text-orange-500 font-bold text-lg mb-2">vooomo</h3>
+            <h3 className="text-orange-500 font-bold text-lg mb-2">BTIFLIX</h3>
             <p className="text-gray-400 text-xs">
-              © {new Date().getFullYear()} VOOOMO. All rights reserved.
+              © {new Date().getFullYear()} BTIFLIX. All rights reserved.
             </p>
           </div>
 
@@ -20,17 +20,20 @@ export default function Footer() {
             <Link href="/" className="text-gray-400 hover:text-orange-500 transition-colors">
               App
             </Link>
-            <Link href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+            <Link href="/terms" className="text-gray-400 hover:text-orange-500 transition-colors">
             Terms of service
             </Link>
-            <Link href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+            <Link href="/docs" className="text-gray-400 hover:text-orange-500 transition-colors">
             Docs
             </Link>
-            <Link href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
+            <Link href="/contact" className="text-gray-400 hover:text-orange-500 transition-colors">
             Contact
             </Link>
-            <Link href="#" className="text-gray-400 hover:text-orange-500 transition-colors">
-              FAQ
+            <Link href="/our-case" className="text-gray-400 hover:text-orange-500 transition-colors">
+            Our Case
+            </Link>
+            <Link href="/fyi" className="text-gray-400 hover:text-orange-500 transition-colors">
+              FYI
             </Link>
           </div>
 
