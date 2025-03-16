@@ -192,7 +192,15 @@ export default function MovieGrid() {
                 ];
                 
                 filteredMovies = availableMovies
-                  .filter(movie => boxOfficeHits.includes(movie.title))
+                  .filter(movie => {
+                    // Special case for Ghostbusters to ensure we get the 1984 version
+                    if (movie.title === 'Ghostbusters') {
+                      const movieDate = new Date(movie.released).getTime();
+                      const targetDate = new Date('1984-06-07').getTime();
+                      return movieDate === targetDate;
+                    }
+                    return boxOfficeHits.includes(movie.title);
+                  })
                   .sort((a, b) => {
                     // Get the index of each movie in the boxOfficeHits array
                     const indexA = boxOfficeHits.indexOf(a.title);
