@@ -109,7 +109,18 @@ export default function MovieGrid() {
             switch (section.title) {
               case 'New Releases':
                 filteredMovies = availableMovies
-                  .sort((a, b) => new Date(b.released).getTime() - new Date(a.released).getTime())
+                  .filter(movie => !movie.genre?.includes('Horror'))
+                  .sort((a, b) => {
+                    // First sort by date (newest first)
+                    const dateComparison = new Date(b.released).getTime() - new Date(a.released).getTime();
+                    
+                    // If dates are equal, sort by rating (highest first)
+                    if (dateComparison === 0) {
+                      return (parseFloat(b.rating || '0') - parseFloat(a.rating || '0'));
+                    }
+                    
+                    return dateComparison;
+                  })
                   .slice(0, 14)
                 break;
               case 'Top Searches':
