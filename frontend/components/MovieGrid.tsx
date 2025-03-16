@@ -90,7 +90,7 @@ export default function MovieGrid() {
         }
 
         if (isFilterActive) {
-          // Apply user filters
+          // Apply user filters without date restriction for searches
           const filtered = allMovies.filter(movie => {
             if (activeFilters.genre && !movie.genre?.includes(activeFilters.genre)) {
               return false;
@@ -119,6 +119,15 @@ export default function MovieGrid() {
           const usedMovieIds = new Set<string>()
           const updatedSections = sections.map(section => {
             let availableMovies = allMovies.filter(movie => !usedMovieIds.has(movie.id))
+            
+            // Apply date restriction for all sections except Box Office #1's
+            if (section.title !== 'Box Office #1\'s') {
+              availableMovies = availableMovies.filter(movie => {
+                const releaseYear = movie.released ? new Date(movie.released).getFullYear() : 0;
+                return releaseYear >= 2010 && releaseYear <= 2025;
+              });
+            }
+            
             let filteredMovies: Movie[] = []
 
             switch (section.title) {
