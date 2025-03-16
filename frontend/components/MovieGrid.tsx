@@ -125,21 +125,35 @@ export default function MovieGrid() {
                   .slice(0, 14)
                 break;
               case 'Top Searches':
-                filteredMovies = availableMovies.slice(0, 21)
+                filteredMovies = availableMovies
+                  .sort((a, b) => new Date(b.released).getTime() - new Date(a.released).getTime()) // Sort by newest first
+                  .slice(0, 21)
                 break;
               case 'Action Movies':
                 filteredMovies = availableMovies
                   .filter(movie => movie.genre?.includes('Action'))
+                  .sort((a, b) => new Date(b.released).getTime() - new Date(a.released).getTime()) // Sort by newest first
                   .slice(0, 21)
                 break;
               case 'Drama Movies':
                 filteredMovies = availableMovies
                   .filter(movie => movie.genre?.includes('Drama'))
+                  .sort((a, b) => new Date(b.released).getTime() - new Date(a.released).getTime()) // Sort by newest first
                   .slice(0, 21)
                 break;
               case 'Top Rated':
                 filteredMovies = availableMovies
-                  .sort((a, b) => (parseFloat(b.rating || '0') - parseFloat(a.rating || '0')))
+                  .sort((a, b) => {
+                    // First sort by rating
+                    const ratingDiff = parseFloat(b.rating || '0') - parseFloat(a.rating || '0');
+                    
+                    // If ratings are equal, sort by date (newest first)
+                    if (ratingDiff === 0) {
+                      return new Date(b.released).getTime() - new Date(a.released).getTime();
+                    }
+                    
+                    return ratingDiff;
+                  })
                   .slice(0, 21)
                 break;
               case 'Box Office #1\'s':
