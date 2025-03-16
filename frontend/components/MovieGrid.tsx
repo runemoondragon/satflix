@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie'
 
 interface Movie {
   id: string;
@@ -27,14 +28,27 @@ interface Filters {
 }
 
 export default function MovieGrid() {
-  const [sections, setSections] = useState<MovieSection[]>([
-    { title: 'New Releases', movies: [], loading: true },
-    { title: 'Top Searches', movies: [], loading: true },
-    { title: 'Action Movies', movies: [], loading: true },
-    { title: 'Drama Movies', movies: [], loading: true },
-    { title: 'Top Rated', movies: [], loading: true },
-    { title: 'Box Office #1\'s', movies: [], loading: true }
-  ]);
+  const [sections, setSections] = useState<MovieSection[]>(() => {
+    // Try to get initial data from cookie
+    const cachedData = Cookies.get('movieSections')
+    if (cachedData) {
+      try {
+        return JSON.parse(cachedData)
+      } catch (e) {
+        console.error('Error parsing cached movie data:', e)
+      }
+    }
+    
+    // Default sections if no cache
+    return [
+      { title: 'New Releases', movies: [], loading: true },
+      { title: 'Top Searches', movies: [], loading: true },
+      { title: 'Action Movies', movies: [], loading: true },
+      { title: 'Drama Movies', movies: [], loading: true },
+      { title: 'Top Rated', movies: [], loading: true },
+      { title: 'Box Office #1\'s', movies: [], loading: true }
+    ]
+  });
   
   const [activeFilters, setActiveFilters] = useState<Filters>({
     genre: '',
@@ -224,10 +238,34 @@ export default function MovieGrid() {
               loading: false
             }
           })
+          
+          // Save to cookie if not using filters
+          if (!isFilterActive) {
+            try {
+              Cookies.set('movieSections', JSON.stringify(updatedSections), {
+                expires: 1/24, // Expires in 1 hour
+                sameSite: 'strict'
+              })
+            } catch (e) {
+              console.error('Error caching movie data:', e)
+            }
+          }
+          
           setSections(updatedSections)
         }
       } catch (error) {
         console.error("Error fetching movies:", error)
+        
+        // If error occurs and we have cached data, keep using it
+        const cachedData = Cookies.get('movieSections')
+        if (cachedData && !isFilterActive) {
+          try {
+            const parsedCache = JSON.parse(cachedData)
+            setSections(parsedCache)
+          } catch (e) {
+            console.error('Error parsing cached movie data:', e)
+          }
+        }
       } finally {
         setLoading(false)
       }
