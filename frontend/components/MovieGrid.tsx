@@ -148,7 +148,7 @@ export default function MovieGrid() {
                   'Raiders of the Lost Ark',
                   'E.T. the Extra-Terrestrial',
                   'Star Wars: Episode VI – Return of the Jedi',
-                  { title: 'Ghostbusters', releaseDate: '1984-06-07' },
+                  'Ghostbusters',
                   'Back to the Future',
                   'Top Gun',
                   'Three Men and a Baby',
@@ -192,28 +192,11 @@ export default function MovieGrid() {
                 ];
                 
                 filteredMovies = availableMovies
-                  .filter(movie => {
-                    // Handle special case for Ghostbusters
-                    if (movie.title === 'Ghostbusters') {
-                      const movieDate = new Date(movie.released);
-                      const targetDate = new Date('1984-06-07');
-                      return movieDate.getFullYear() === targetDate.getFullYear() &&
-                             movieDate.getMonth() === targetDate.getMonth() &&
-                             movieDate.getDate() === targetDate.getDate();
-                    }
-                    // For other movies, check if they're in the list
-                    return boxOfficeHits.some(hit => 
-                      typeof hit === 'string' ? hit === movie.title : hit.title === movie.title
-                    );
-                  })
+                  .filter(movie => boxOfficeHits.includes(movie.title))
                   .sort((a, b) => {
                     // Get the index of each movie in the boxOfficeHits array
-                    const indexA = boxOfficeHits.findIndex(hit => 
-                      typeof hit === 'string' ? hit === a.title : hit.title === a.title
-                    );
-                    const indexB = boxOfficeHits.findIndex(hit => 
-                      typeof hit === 'string' ? hit === b.title : hit.title === b.title
-                    );
+                    const indexA = boxOfficeHits.indexOf(a.title);
+                    const indexB = boxOfficeHits.indexOf(b.title);
                     // Sort by the order in the boxOfficeHits array
                     return indexA - indexB;
                   })
