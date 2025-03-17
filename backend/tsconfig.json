@@ -1,15 +1,15 @@
 {
     "compilerOptions": {
-      "target": "ES6",
-      "module": "CommonJS",
+      "target": "es2018",
+      "module": "commonjs",
+      "outDir": "./dist",
+      "rootDir": "./src",
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "outDir": "./dist",
-      "rootDir": "./src",
-      "types": ["node"]
+      "forceConsistentCasingInFileNames": true
     },
-    "include": ["src"]
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
   }
   

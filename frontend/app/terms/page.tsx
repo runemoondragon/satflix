@@ -40,7 +40,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-xl font-bold text-gray-900 mb-4">2. Nature of Service</h2>
             <p className="text-gray-700">
-              Btiflix provides an aggregation service that connects users with publicly available movie streaming links. We do not host or store any content; we only redirect users to third-party sources.
+              Vooomo provides an aggregation service that connects users with publicly available movie streaming links. We do not host or store any content; we only redirect users to third-party sources.
             </p>
           </section>
 
