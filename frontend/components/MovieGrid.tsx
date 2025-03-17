@@ -45,8 +45,7 @@ export default function MovieGrid() {
       { title: 'Top Searches', movies: [], loading: true },
       { title: 'Action Movies', movies: [], loading: true },
       { title: 'Drama Movies', movies: [], loading: true },
-      { title: 'Top Rated', movies: [], loading: true },
-      { title: 'Box Office #1\'s', movies: [], loading: true }
+      { title: 'Top Rated', movies: [], loading: true }
     ]
   });
   
@@ -120,13 +119,11 @@ export default function MovieGrid() {
           const updatedSections = sections.map(section => {
             let availableMovies = allMovies.filter(movie => !usedMovieIds.has(movie.id))
             
-            // Apply date restriction for all sections except Box Office #1's
-            if (section.title !== 'Box Office #1\'s') {
-              availableMovies = availableMovies.filter(movie => {
-                const releaseYear = movie.released ? new Date(movie.released).getFullYear() : 0;
-                return releaseYear >= 2015 && releaseYear <= 2025;
-              });
-            }
+            // Apply date restriction for all sections
+            availableMovies = availableMovies.filter(movie => {
+              const releaseYear = movie.released ? new Date(movie.released).getFullYear() : 0;
+              return releaseYear >= 2015 && releaseYear <= 2025;
+            });
             
             let filteredMovies: Movie[] = []
 
@@ -178,65 +175,6 @@ export default function MovieGrid() {
                     return ratingDiff;
                   })
                   .slice(0, 21)
-                break;
-              case 'Box Office #1\'s':
-                const boxOfficeHits = [
-                  'Star Wars: Episode V – The Empire Strikes Back',
-                  'Raiders of the Lost Ark',
-                  'E.T. the Extra-Terrestrial',
-                  'Star Wars: Episode VI – Return of the Jedi',
-                  'Ghostbusters',
-                  'Back to the Future',
-                  'Top Gun',
-                  'Three Men and a Baby',
-                  'Rain Man',
-                  'Batman',
-                  'Home Alone',
-                  'Terminator 2: Judgment Day',
-                  'Aladdin',
-                  'Jurassic Park',
-                  'The Lion King',
-                  'Toy Story',
-                  'Independence Day',
-                  'Titanic',
-                  'Saving Private Ryan',
-                  'Star Wars: Episode I – The Phantom Menace',
-                  'How the Grinch Stole Christmas',
-                  'Harry Potter and the Sorcerer\'s Stone',
-                  'Spider-Man',
-                  'The Lord of the Rings: The Return of the King',
-                  'Shrek 2',
-                  'Star Wars: Episode III – Revenge of the Sith',
-                  'Pirates of the Caribbean: Dead Man\'s Chest',
-                  'Spider-Man 3',
-                  'The Dark Knight',
-                  'Avatar',
-                  'Toy Story 3',
-                  'Harry Potter and the Deathly Hallows – Part 2',
-                  'The Avengers',
-                  'The Hunger Games: Catching Fire',
-                  'American Sniper',
-                  'Star Wars: Episode VII – The Force Awakens',
-                  'Rogue One: A Star Wars Story',
-                  'Star Wars: Episode VIII – The Last Jedi',
-                  'Black Panther',
-                  'Avengers: Endgame',
-                  'Bad Boys for Life',
-                  'Spider-Man: No Way Home',
-                  'Top Gun: Maverick',
-                  'Barbie',
-                  'Inside Out 2'
-                ];
-                
-                filteredMovies = availableMovies
-                  .filter(movie => boxOfficeHits.includes(movie.title))
-                  .sort((a, b) => {
-                    // Get the index of each movie in the boxOfficeHits array
-                    const indexA = boxOfficeHits.indexOf(a.title);
-                    const indexB = boxOfficeHits.indexOf(b.title);
-                    // Sort by the order in the boxOfficeHits array
-                    return indexA - indexB;
-                  })
                 break;
             }
 
