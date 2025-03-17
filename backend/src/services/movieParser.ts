@@ -28,7 +28,7 @@ export async function getMoviesFromSitemaps(startIndex = 0): Promise<ScraperResu
     await updateScraperStatus(true);
 
     // Process sitemaps from sitemap-list-1.xml to sitemap-list-5.xml
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 27; i <= 30; i++) {
       const sitemapFile = `sitemap-list-${i}.xml`;
       console.log(`📖 Reading sitemap file: ${sitemapFile}`);
 

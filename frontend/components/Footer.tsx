@@ -9,9 +9,9 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Logo and Copyright */}
           <div className="text-center md:text-left">
-            <h3 className="text-orange-500 font-bold text-lg mb-2">BTIFLIX</h3>
+            <h3 className="text-orange-500 font-bold text-lg mb-2">VOOOMO</h3>
             <p className="text-gray-400 text-xs">
-              © {new Date().getFullYear()} BTIFLIX. All rights reserved.
+              © {new Date().getFullYear()} Vooomo. All rights reserved.
             </p>
           </div>
 

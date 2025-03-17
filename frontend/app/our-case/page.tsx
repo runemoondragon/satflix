@@ -19,7 +19,7 @@ export default function OurCase() {
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </button>
-          <h1 className="text-orange-500 font-bold">BTIFLIX</h1>
+          <h1 className="text-orange-500 font-bold">Vooomo</h1>
         </div>
       </div>
 
@@ -157,7 +157,7 @@ export default function OurCase() {
           <div className="mt-12 text-gray-700">
             <p>With all respect and a vision for a better digital future,</p>
             <p className="mt-4">Your Reluctant Ally in the Fight Against Piracy,</p>
-            <p className="font-bold text-orange-500 mt-2">BTIFLIX</p>
+            <p className="font-bold text-orange-500 mt-2">VOOOMO</p>
           </div>
         </article>
       </div>

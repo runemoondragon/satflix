@@ -8,7 +8,7 @@ import Navigation from '../components/Navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'BTIFLIX - Watch Movies with Bitcoin',
+  title: 'vooomo - Watch Movies with Bitcoin',
   description: 'Watch your favorite movies using Bitcoin Lightning Network',
   icons: {
     icon: [

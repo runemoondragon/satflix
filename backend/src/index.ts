@@ -151,7 +151,7 @@ app.get("/api/movies", cacheResponse(CACHE_DURATION), async (req: Request, res: 
     }
 
     // Add index hints and limit
-    query += " LIMIT 6501";
+    query += " LIMIT 40625";
 
     const result = await pool.query(query, params);
     res.json(result.rows);

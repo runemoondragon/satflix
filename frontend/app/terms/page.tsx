@@ -19,7 +19,7 @@ export default function TermsOfService() {
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </button>
-          <h1 className="text-orange-500 font-bold">BTIFLIX</h1>
+          <h1 className="text-orange-500 font-bold">Vooomo</h1>
         </div>
       </div>
 
@@ -33,7 +33,7 @@ export default function TermsOfService() {
           <section className="mb-8">
             <h2 className="text-xl font-bold text-gray-900 mb-4">1. Introduction</h2>
             <p className="text-gray-700">
-              Welcome to Btiflix ("the Platform"). By accessing or using our services, you agree to abide by these Terms of Service. If you do not agree, please refrain from using the Platform.
+              Welcome to Vooomo ("the Platform"). By accessing or using our services, you agree to abide by these Terms of Service. If you do not agree, please refrain from using the Platform.
             </p>
           </section>
 
@@ -89,7 +89,7 @@ export default function TermsOfService() {
             <h2 className="text-xl font-bold text-gray-900 mb-4">Legal Disclaimer</h2>
             <div className="text-gray-700 space-y-4">
               <p>
-                Btiflix acts as an intermediary, providing links to third-party streaming services. We do not host, distribute, or modify any copyrighted content. Users access third-party sites at their own discretion, and the Platform assumes no responsibility for the legality or quality of the content provided by these sites.
+                Vooomo acts as an intermediary, providing links to third-party streaming services. We do not host, distribute, or modify any copyrighted content. Users access third-party sites at their own discretion, and the Platform assumes no responsibility for the legality or quality of the content provided by these sites.
               </p>
               <p>
                 If a content owner believes their rights are being infringed, they may request removal of redirection or discuss a partnership agreement for legal content distribution.
