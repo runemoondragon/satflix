@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const BACKEND_API_URL = 'http://localhost:3001/api/movies'; // Backend API URL
+const BACKEND_API_URL = 'http://localhost:3001/api'; // Backend API URL
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
     try {
         // Fetch movie from backend API using exact title match
-        const backendResponse = await fetch(`${BACKEND_API_URL}?search=${encodeURIComponent(title)}`);
+        const backendResponse = await fetch(`${BACKEND_API_URL}/movies?search=${encodeURIComponent(title)}`);
         
         if (!backendResponse.ok) {
             throw new Error(`Backend API Error: ${backendResponse.status}`);
