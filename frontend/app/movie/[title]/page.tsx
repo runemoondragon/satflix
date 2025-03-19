@@ -235,7 +235,11 @@ export default function MoviePage() {
                       const controller = new AbortController();
                       const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-                      const response = await fetch('/api/payments', {
+                      const apiUrl = process.env.NEXT_PUBLIC_APP_URL 
+  ? `${process.env.NEXT_PUBLIC_APP_URL}/api/payments` 
+  : '/api/payments';
+
+const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/json'
