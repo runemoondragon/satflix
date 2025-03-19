@@ -20,7 +20,7 @@ export default function Documentation() {
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </button>
-          <h1 className="text-orange-500 font-bold">BTIFLIX</h1>
+          <h1 className="text-orange-500 font-bold">VOOOMO</h1>
         </div>
       </div>
 

@@ -19,7 +19,7 @@ export default function FYI() {
             <ArrowLeft className="w-4 h-4" />
             Back to Home
           </button>
-          <h1 className="text-orange-500 font-bold">BTIFLIX</h1>
+          <h1 className="text-orange-500 font-bold">VOOOMO</h1>
         </div>
       </div>
 
@@ -27,7 +27,7 @@ export default function FYI() {
       <div className="max-w-3xl mx-auto px-6 py-24">
         <article className="prose prose-orange mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            FYI: How Our Redirection System Works & Why You Need Us
+            How Our Redirection System Works
           </h1>
 
           <div className="bg-orange-50 border border-orange-100 rounded-lg p-6 mb-8">
