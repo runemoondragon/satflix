@@ -2,6 +2,7 @@ import express, { Request, Response, RequestHandler } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import pool from "./db/index"; // Import database connection
+import imageProxyRoutes from './routes/imageProxy';
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
 // ✅ Middleware
 app.use(express.json()); // Parse JSON requests
 app.use(cors()); // Allow frontend requests
-
+app.use('/api', imageProxyRoutes);
 // Add response caching middleware
 const cacheResponse = (duration: number): RequestHandler => {
   return (req, res, next) => {

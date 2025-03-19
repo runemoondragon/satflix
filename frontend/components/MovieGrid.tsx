@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie'
-
+import Image from 'next/image'
 interface Movie {
   id: string;
   title: string;
@@ -232,18 +232,22 @@ export default function MovieGrid() {
       style={{ width: '183px', height: '253px' }}
     >
       <div className="relative w-full h-full">
-        {movie.thumbnailUrl ? (
-          <img 
-            src={movie.thumbnailUrl}
-            alt={movie.title}
-            onError={handleImageError}
-            className="w-full h-full object-cover rounded-md"
-          />
-        ) : (
-          <div className="w-full h-full bg-gray-800 flex items-center justify-center rounded-md">
-            <span className="text-gray-400 text-xs">No Image</span>
-          </div>
-        )}
+       {movie.thumbnailUrl ? (
+  <img
+  src={`https://vooomo.com/api/proxy-image?url=${encodeURIComponent(movie.thumbnailUrl)}`}
+  alt={movie.title}
+  width={250}
+  height={400}
+  onError={handleImageError}
+  className="w-full h-full object-cover rounded-md"
+/>
+
+) : (
+  <div className="w-full h-full bg-gray-800 flex items-center justify-center rounded-md">
+    <span className="text-gray-400 text-xs">No Image</span>
+  </div>
+)}
+
 
         <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-2 flex flex-col justify-end">
           <h3 className="text-white text-xs font-medium truncate mb-1">{movie.title}</h3>

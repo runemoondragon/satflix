@@ -1,19 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      'f.woowoowoowoo.net', // Allow images from woowoowoowoo.net
-      'placeholder.com',     // For placeholder images
-    ],
+    domains: ['f.woowoowoowoo.net', 'vooomo.com'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**.woowoowoowoo.net',
         pathname: '/**',
-      },
+      }
     ],
   },
-  // Other Next.js config options can go here
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:3001/api/:path*',
+      },
+    ];
+  }
 };
 
-module.exports = nextConfig; 
+module.exports = nextConfig;

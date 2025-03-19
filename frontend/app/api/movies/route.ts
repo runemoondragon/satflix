@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const BACKEND_API_URL = 'http://localhost:3001/api';
+const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:3001';
 
 export async function GET(request: Request) {
   try {
@@ -85,20 +85,19 @@ export async function GET(request: Request) {
     });
 
     // Transform response to match frontend needs
-    const movies = Array.isArray(data) ? data.map(movie => ({
-      id: movie.id,
-      title: movie.title,
-      overview: movie.overview,
-      rating: movie.rating,
-      quality: movie.quality,
-      thumbnailUrl: movie.thumbnailurl,
-      backgroundUrl: movie.backgroundurl,
-      genre: movie.genre,
-      released: movie.released,
-      watchLink: movie.watchlink
-    })) : [];
-
-    return NextResponse.json(movies);
+const movies = Array.isArray(data) ? data.map(movie => ({
+    id: movie.id,
+    title: movie.title,
+    overview: movie.overview,
+    rating: movie.rating,
+    quality: movie.quality,
+    thumbnailUrl: movie.thumbnailurl,
+    backgroundUrl: movie.backgroundurl,
+    genre: movie.genre,
+    released: movie.released,
+    watchLink: movie.watchlink
+})) : [];   
+ return NextResponse.json(movies);
   } catch (error) {
     console.error('❌ Detailed error in movies API:', {
       error: error instanceof Error ? error.message : 'Unknown error',

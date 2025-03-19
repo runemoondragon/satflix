@@ -142,7 +142,7 @@ export default function Like({ currentMovie, excludeCurrentMovie }: LikeProps) {
               <div className="relative w-full h-full">
                 {movie.thumbnailUrl ? (
                   <img 
-                    src={movie.thumbnailUrl}
+                    src={`https://vooomo.com/api/proxy-image?url=${encodeURIComponent(movie.thumbnailUrl)}`}
                     alt={movie.title}
                     onError={handleImageError}
                     className="w-full h-full object-cover rounded-md"

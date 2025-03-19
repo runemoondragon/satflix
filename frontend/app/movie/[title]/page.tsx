@@ -85,7 +85,7 @@ export default function MoviePage() {
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-80"
-        style={{ backgroundImage: `url(${movie.backgroundUrl})` }}
+        style={{ backgroundImage: `url(https://vooomo.com/api/proxy-image?url=${encodeURIComponent(movie.backgroundUrl)})` }}
       />
 
       {/* Content Container */}
@@ -96,7 +96,7 @@ export default function MoviePage() {
           <div className="md:w-1/4">
             <div className="aspect-[2/3] relative rounded-lg overflow-hidden shadow-2xl">
               <img 
-                src={movie.thumbnailUrl}
+                src={`https://vooomo.com/api/proxy-image?url=${encodeURIComponent(movie.thumbnailUrl)}`}
                 alt={movie.title}
                 className="w-full h-full object-cover"
               />

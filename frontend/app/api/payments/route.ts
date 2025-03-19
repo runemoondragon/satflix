@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
         speedPolicy: "HighSpeed"
       },
       notification: {
-        url: `${process.env.NEXT_PUBLIC_APP_URL}/api/btcpay-webhook`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/btcpay-webhook`,
         email: null
       }
     };

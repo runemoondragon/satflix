@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react'
-
+import Image from 'next/image';
 interface HeroMovie {
   id: string
   title: string
@@ -17,13 +17,14 @@ interface HeroMovie {
 }
 
 const FEATURED_MOVIES = [
+  "Fight or Flight",
   "Andrew Schulz: LIFE",
+   "Squad 36",
+  "Cold Wallet",
+  "Dhoom Dhaam",
   "Flight Risk",
-  "My Fault: London",
-  "Diddy: The Making of a Bad Boy",
-  "You're Cordially Invited",
-  "Back in Action",
-  "Captain America: Brave New World"
+  "Demon City",
+  "A Copenhagen Love Storyq"
 ];
 
 export default function HeroSlider() {
@@ -122,7 +123,13 @@ export default function HeroSlider() {
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${mainMovie?.backgroundUrl || ''})` }}
+           style={{
+  backgroundImage: `url(${
+    mainMovie?.backgroundUrl
+      ? `https://vooomo.com/api/proxy-image?url=${encodeURIComponent(mainMovie.backgroundUrl)}`
+      : ''
+  })`
+}}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
 
@@ -261,10 +268,13 @@ export default function HeroSlider() {
                 isTransitioning ? 'pointer-events-none opacity-50' : 'opacity-100'
               }`}
             >
-              <img 
-                src={movie.thumbnailUrl}
-                alt={movie.title}
-                className="w-16 h-24 object-cover rounded-md transition-transform group-hover:scale-105"
+           
+               <Image
+  src={`/api/proxy-image?url=${encodeURIComponent(movie.thumbnailUrl)}`}
+  alt={movie.title}
+  width={250}
+  height={400}
+                               className="w-16 h-24 object-cover rounded-md transition-transform group-hover:scale-105"
               />
               <div className="flex-1 min-w-0">
                 <h3 className="text-white text-xs font-medium truncate group-hover:text-orange-500 transition-colors">
