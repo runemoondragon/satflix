@@ -89,7 +89,7 @@ export default function HeroSlider() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-[70vh] w-full bg-gray-900/95 backdrop-blur-sm">
+      <div className="flex justify-center items-center h-[50vh] md:h-[70vh] w-full bg-gray-900/95 backdrop-blur-sm">
         <span className="text-white text-xs">Loading featured movies...</span>
       </div>
     )
@@ -97,7 +97,7 @@ export default function HeroSlider() {
 
   if (movies.length === 0) {
     return (
-      <div className="flex justify-center items-center h-[70vh] w-full bg-gray-900/95 backdrop-blur-sm">
+      <div className="flex justify-center items-center h-[50vh] md:h-[70vh] w-full bg-gray-900/95 backdrop-blur-sm">
         <span className="text-white text-xs">Featured movies unavailable.</span>
       </div>
     )
@@ -107,7 +107,7 @@ export default function HeroSlider() {
   const sideMovies = movies.filter((_, index) => index !== currentSlide)
 
   return (
-    <div className="relative w-full h-[75vh] flex bg-black overflow-hidden">
+    <div className="relative w-full h-[50vh] md:h-[75vh] flex bg-black overflow-hidden">
       {/* Left Side - Main Movie */}
       <div className="relative w-full lg:w-[70%] h-full overflow-hidden">
         {/* Current Slide */}
@@ -123,58 +123,58 @@ export default function HeroSlider() {
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-           style={{
-  backgroundImage: `url(${
-    mainMovie?.backgroundUrl
-      ? `https://vooomo.com/api/proxy-image?url=${encodeURIComponent(mainMovie.backgroundUrl)}`
-      : ''
-  })`
-}}
+            style={{
+              backgroundImage: `url(${
+                mainMovie?.backgroundUrl
+                  ? `https://vooomo.com/api/proxy-image?url=${encodeURIComponent(mainMovie.backgroundUrl)}`
+                  : ''
+              })`
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
 
           {/* Movie Details */}
-          <div className={`absolute bottom-10 left-10 text-white w-3/4 transform transition-all duration-500 ease-in-out ${
+          <div className={`absolute bottom-6 md:bottom-10 left-4 md:left-10 text-white w-[85%] md:w-3/4 transform transition-all duration-500 ease-in-out ${
             isTransitioning ? 'opacity-0' : 'opacity-100'
           }`}>
             {/* Metadata Tags */}
-            <div className="flex flex-wrap items-center gap-2 mb-3">
+            <div className="flex flex-wrap items-center gap-1.5 md:gap-2 mb-2 md:mb-3">
               {mainMovie?.rating && (
-                <span className="bg-orange-500 text-white px-2 py-0.5 rounded text-[10px] font-medium">
+                <span className="bg-orange-500 text-white px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-medium">
                   ★ {mainMovie.rating}
                 </span>
               )}
               {mainMovie?.quality && (
-                <span className="bg-blue-500 text-white px-2 py-0.5 rounded text-[10px] font-medium">
+                <span className="bg-blue-500 text-white px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-medium">
                   {mainMovie.quality}
                 </span>
               )}
               {mainMovie?.genre && (
-                <span className="bg-gray-800 text-white px-2 py-0.8 rounded text-[10px] font-medium">
+                <span className="bg-gray-800 text-white px-1.5 md:px-2 py-0.5 rounded text-[8px] md:text-[10px] font-medium">
                   {mainMovie.genre}
                 </span>
               )}
             </div>
 
-            <h1 className="text-2xl md:text-4xl font-bold mb-2">{mainMovie?.title}</h1>
-            <p className="text-gray-200 text-sm md:text-sm max-w-2xl mb-6 line-clamp-3">
+            <h1 className="text-xl md:text-2xl lg:text-4xl font-bold mb-1 md:mb-2 line-clamp-2">{mainMovie?.title}</h1>
+            <p className="text-gray-200 text-xs md:text-sm max-w-2xl mb-3 md:mb-6 line-clamp-2 md:line-clamp-3">
               {mainMovie?.overview || 'No description available.'}
             </p>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 md:gap-4">
               <button
                 onClick={() => router.push(`/movie/${encodeURIComponent(mainMovie.title)}`)}
-                className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-xs font-medium transition-colors"
+                className="flex items-center gap-1.5 md:gap-2 bg-orange-500 hover:bg-orange-600 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-medium transition-colors"
               >
-                <Play className="w-4 h-4" />
+                <Play className="w-3 h-3 md:w-4 md:h-4" />
                 <span>Watch Now</span>
               </button>
               <a
                 href={mainMovie?.watchLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-gray-300 hover:text-white transition-colors"
+                className="text-[10px] md:text-xs text-gray-300 hover:text-white transition-colors"
               >
                 More Info
               </a>
@@ -214,22 +214,22 @@ export default function HeroSlider() {
             <button 
               onClick={prevSlide}
               disabled={isTransitioning}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full transition-colors backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed z-10"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-1.5 md:p-2 rounded-full transition-colors backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed z-10"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-3 h-3 md:w-4 md:h-4" />
             </button>
             <button 
               onClick={nextSlide}
               disabled={isTransitioning}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-2 rounded-full transition-colors backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed z-10"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/40 text-white p-1.5 md:p-2 rounded-full transition-colors backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed z-10"
             >
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-3 h-3 md:w-4 md:h-4" />
             </button>
           </>
         )}
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 md:gap-2 z-10">
           {movies.map((_, index) => (
             <button
               key={index}
@@ -238,9 +238,9 @@ export default function HeroSlider() {
                 changeSlide(index, index > currentSlide ? 'right' : 'left')
               }}
               disabled={isTransitioning}
-              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+              className={`w-1 md:w-1.5 h-1 md:h-1.5 rounded-full transition-all duration-300 ${
                 index === currentSlide 
-                  ? 'bg-orange-500 w-4' 
+                  ? 'bg-orange-500 w-3 md:w-4' 
                   : 'bg-gray-400/50 hover:bg-gray-400 disabled:hover:bg-gray-400/50'
               }`}
               aria-label={`Go to slide ${index + 1}`}

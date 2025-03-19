@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { Home, Film, Tv, Search, Filter, ChevronDown } from 'lucide-react';
+import { Home, Film, Tv, Search, Filter, ChevronDown, Menu, X } from 'lucide-react';
 import SearchResults from './SearchResults';
 import debounce from 'lodash/debounce';
 import { useRouter } from 'next/navigation';
@@ -34,7 +34,9 @@ export default function Navigation() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const [filters, setFilters] = useState({
     genre: '',
@@ -142,12 +144,36 @@ export default function Navigation() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [isFilterOpen]);
 
+  // Handle click outside mobile menu
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <nav className="bg-gray-900/95 backdrop-blur-sm text-white sticky top-0 z-50 border-b border-gray-800">
       <div className="max-w-[2000px] mx-auto">
-        <div className="flex items-center justify-center h-14 px-4 gap-4">
-          {/* Main Navigation Links */}
-          <div className="flex space-x-6 text-xs">
+        <div className="flex items-center justify-between h-14 px-4">
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-5 h-5" />
+            ) : (
+              <Menu className="w-5 h-5" />
+            )}
+          </button>
+
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex space-x-6 text-xs">
             <Link href="/" className="hover:text-orange-500 transition-colors flex items-center gap-2">
               <Home className="w-3 h-3" />
               <span>Home</span>
@@ -163,8 +189,8 @@ export default function Navigation() {
           </div>
 
           {/* Search and Filter Section */}
-          <div className="flex items-center gap-2 ml-6">
-            <div className="relative w-64" ref={searchRef}>
+          <div className="flex items-center gap-2 flex-1 md:flex-none md:ml-6 justify-end md:justify-start">
+            <div className="relative w-full max-w-[200px] md:w-64" ref={searchRef}>
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400" />
               <input
                 type="text"
@@ -317,6 +343,50 @@ export default function Navigation() {
             </div>
           </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        <div
+          ref={mobileMenuRef}
+          className={`
+            fixed inset-y-0 left-0 transform ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+            w-64 bg-gray-900 shadow-lg transition-transform duration-200 ease-in-out z-50 md:hidden
+          `}
+        >
+          <div className="p-4 space-y-4">
+            <Link 
+              href="/" 
+              className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-800 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Home className="w-4 h-4" />
+              <span>Home</span>
+            </Link>
+            <Link 
+              href="#" 
+              className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-800 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Film className="w-4 h-4" />
+              <span>Movies</span>
+            </Link>
+            <Link 
+              href="#" 
+              className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-800 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <Tv className="w-4 h-4" />
+              <span>TV Shows</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
       </div>
     </nav>
   );

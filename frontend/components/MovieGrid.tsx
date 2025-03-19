@@ -228,43 +228,41 @@ export default function MovieGrid() {
   const MovieCard = ({ movie }: { movie: Movie }) => (
     <div
       onClick={() => router.push(`/movie/${encodeURIComponent(movie.title)}`)}
-      className="group relative overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105 focus:outline-none cursor-pointer"
-      style={{ width: '183px', height: '253px' }}
+      className="group relative overflow-hidden rounded-lg transition-transform duration-300 hover:scale-105 focus:outline-none cursor-pointer w-[140px] sm:w-[160px] md:w-[183px] h-[200px] sm:h-[220px] md:h-[253px]"
     >
       <div className="relative w-full h-full">
-       {movie.thumbnailUrl ? (
-  <img
-  src={`https://vooomo.com/api/proxy-image?url=${encodeURIComponent(movie.thumbnailUrl)}`}
-  alt={movie.title}
-  width={250}
-  height={400}
-  onError={handleImageError}
-  className="w-full h-full object-cover rounded-md"
-/>
-
-) : (
-  <div className="w-full h-full bg-gray-800 flex items-center justify-center rounded-md">
-    <span className="text-gray-400 text-xs">No Image</span>
-  </div>
-)}
-
-
-        <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-2 flex flex-col justify-end">
-          <h3 className="text-white text-xs font-medium truncate mb-1">{movie.title}</h3>
-          <div className="flex items-center justify-between text-gray-300 text-[10px] mt-1">
-            <span>{movie.genre || 'Unknown'}</span>
-            <span>{movie.released ? new Date(movie.released).getFullYear() : 'N/A'}</span>
+        {movie.thumbnailUrl ? (
+          <img
+            src={`https://vooomo.com/api/proxy-image?url=${encodeURIComponent(movie.thumbnailUrl)}`}
+            alt={movie.title}
+            width={250}
+            height={400}
+            onError={handleImageError}
+            className="w-full h-full object-cover rounded-md"
+          />
+        ) : (
+          <div className="w-full h-full bg-gray-800 flex items-center justify-center rounded-md">
+            <span className="text-gray-400 text-xs">No Image</span>
           </div>
-          {movie.rating && (
-            <div className="absolute top-2 right-2 bg-orange-500 text-white text-[10px] px-1.5 py-0.5 rounded">
-              ★ {movie.rating}
+        )}
+
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="absolute bottom-2 left-2 right-2">
+            <h3 className="text-white text-xs sm:text-sm font-medium line-clamp-2 mb-1">{movie.title}</h3>
+            <div className="flex flex-wrap gap-1">
+              {movie.rating && (
+                <span className="bg-orange-500/90 text-white px-1 py-0.5 rounded text-[8px] sm:text-[10px]">
+                  ★ {movie.rating}
+                </span>
+              )}
+              {movie.quality && (
+                <span className="bg-blue-500/90 text-white px-1 py-0.5 rounded text-[8px] sm:text-[10px]">
+                  {movie.quality}
+                </span>
+              )}
             </div>
-          )}
-          {movie.quality && (
-            <div className="absolute top-2 left-2 bg-blue-500 text-white text-[10px] px-1.5 py-0.5 rounded">
-              {movie.quality}
-            </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
@@ -272,53 +270,53 @@ export default function MovieGrid() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-[50vh]">
-        <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    )
-  }
-
-  if (isFilterActive) {
-    return (
-      <div className="py-8 px-8">
-        <h2 className="text-xl font-semibold mb-6 text-white">Search Results</h2>
-        {filteredMovies.length > 0 ? (
-          <div className="grid grid-cols-7 gap-4">
-            {filteredMovies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
-        ) : (
-          <div className="flex items-center justify-center h-[253px] text-gray-500">
-            <p className="text-sm">No movies found matching your filters</p>
-          </div>
-        )}
+      <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">
+        <div className="flex justify-center items-center h-32">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-12 py-8">
-      {sections.map((section) => (
-        <div key={section.title} className="px-8">
-          <h2 className="text-xl font-semibold mb-6 text-white">{section.title}</h2>
-          {section.loading ? (
-            <div className="flex justify-center items-center h-[253px]">
-              <div className="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
-            </div>
-          ) : section.movies.length > 0 ? (
-            <div className="grid grid-cols-7 gap-4">
-              {section.movies.map((movie) => (
+    <div className="min-h-screen bg-gray-900 text-white p-4 md:p-8">
+      {isFilterActive ? (
+        // Filtered View
+        <div className="space-y-6">
+          <h2 className="text-lg md:text-xl font-semibold">Search Results</h2>
+          {filteredMovies.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 md:gap-4 justify-items-center">
+              {filteredMovies.map(movie => (
                 <MovieCard key={movie.id} movie={movie} />
               ))}
             </div>
           ) : (
-            <div className="flex items-center justify-center h-[253px] text-gray-500">
-              <p className="text-sm">No movies found in this category</p>
-            </div>
+            <p className="text-gray-400 text-sm">No movies found matching your filters.</p>
           )}
         </div>
-      ))}
+      ) : (
+        // Categorized View
+        <div className="space-y-8">
+          {sections.map(section => (
+            <div key={section.title} className="space-y-4">
+              <h2 className="text-lg md:text-xl font-semibold">{section.title}</h2>
+              {section.loading ? (
+                <div className="flex justify-center items-center h-32">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+                </div>
+              ) : (
+                <div className="overflow-hidden">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 md:gap-4 justify-items-center">
+                    {section.movies.map(movie => (
+                      <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
