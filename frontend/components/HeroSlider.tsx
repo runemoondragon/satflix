@@ -20,11 +20,10 @@ const FEATURED_MOVIES = [
   "Fight or Flight",
   "Andrew Schulz: LIFE",
    "Squad 36",
-  "Cold Wallet",
   "Dhoom Dhaam",
   "Flight Risk",
   "Demon City",
-  "A Copenhagen Love Storyq"
+  "A Copenhagen Love Story"
 ];
 
 export default function HeroSlider() {
