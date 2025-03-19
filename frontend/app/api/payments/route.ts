@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Load environment variables
-const btcpayServerUrl = process.env.BTCPAY_SERVER_URL;
-const storeId = process.env.BTCPAY_STORE_ID;
-const apiKey = process.env.BTCPAY_API_KEY;
+// Load environment variables with your existing structure
+const btcpayServerUrl = process.env.BTCPAY_SERVER_URL?.trim();
+const storeId = process.env.BTCPAY_STORE_ID?.trim();
+const apiKey = process.env.BTCPAY_API_KEY?.trim();
+const appUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
 
 export async function POST(req: NextRequest) {
   try {
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
         speedPolicy: "HighSpeed"
       },
       notification: {
-        url: `${process.env.NEXT_PUBLIC_APP_URL}/btcpay-webhook`,
+        url: `${appUrl}/api/btcpay-webhook`, // Using your NEXT_PUBLIC_APP_URL directly
         email: null
       }
     };

@@ -235,8 +235,6 @@ export default function MovieGrid() {
           <img
             src={`https://vooomo.com/api/proxy-image?url=${encodeURIComponent(movie.thumbnailUrl)}`}
             alt={movie.title}
-            width={250}
-            height={400}
             onError={handleImageError}
             className="w-full h-full object-cover rounded-md"
           />
@@ -246,7 +244,6 @@ export default function MovieGrid() {
           </div>
         )}
 
-        {/* Hover Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-2 left-2 right-2">
             <h3 className="text-white text-xs sm:text-sm font-medium line-clamp-2 mb-1">{movie.title}</h3>
@@ -285,10 +282,12 @@ export default function MovieGrid() {
         <div className="space-y-6">
           <h2 className="text-lg md:text-xl font-semibold">Search Results</h2>
           {filteredMovies.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 md:gap-4 justify-items-center">
-              {filteredMovies.map(movie => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
+            <div className="overflow-hidden">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-3 md:gap-4 justify-items-center">
+                {filteredMovies.map(movie => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </div>
             </div>
           ) : (
             <p className="text-gray-400 text-sm">No movies found matching your filters.</p>
