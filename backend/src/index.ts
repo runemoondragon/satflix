@@ -116,7 +116,7 @@ app.post("/api/btcpay-webhook", async (req: Request, res: Response) => {
         metadata.movieId,
         metadata.movieTitle,
         invoiceId,
-        0.25,
+        0.5,
         'USD',
         'completed',
         manuallyMarked,
