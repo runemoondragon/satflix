@@ -3,12 +3,13 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Footer from '../../components/Footer';
 
 export default function TermsOfService() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Navigation */}
       <div className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm z-10 border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -24,7 +25,7 @@ export default function TermsOfService() {
       </div>
 
       {/* Terms Content */}
-      <div className="max-w-3xl mx-auto px-6 py-24">
+      <div className="max-w-3xl mx-auto px-6 py-24 flex-grow">
         <article className="prose prose-orange mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
             Terms of Service
@@ -101,6 +102,7 @@ export default function TermsOfService() {
           </section>
         </article>
       </div>
+      <Footer />
     </div>
   );
 } 

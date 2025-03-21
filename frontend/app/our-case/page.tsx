@@ -3,12 +3,13 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Footer from '../../components/Footer';
 
 export default function OurCase() {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Navigation */}
       <div className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-sm z-10 border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -24,7 +25,7 @@ export default function OurCase() {
       </div>
 
       {/* Letter Content */}
-      <div className="max-w-3xl mx-auto px-6 py-24">
+      <div className="max-w-3xl mx-auto px-6 py-24 flex-grow">
         <article className="prose prose-orange mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
             A Love Letter to the Lawmakers and Content Owners: Why We Should Exist
@@ -136,7 +137,7 @@ export default function OurCase() {
             </li>
             <li className="flex items-start gap-3">
               <span className="text-blue-500">🔹</span>
-              <span className="text-gray-700">Or would you rather stand with us, take back control, uno reverse, and reclaim what’s rightfully yours?</span>
+              <span className="text-gray-700">Or would you rather stand with us, take back control, uno reverse, and reclaim what's rightfully yours?</span>
             </li>
           </ul>
           
@@ -161,6 +162,7 @@ export default function OurCase() {
           </div>
         </article>
       </div>
+      <Footer />
     </div>
   );
 } 

@@ -3,6 +3,7 @@
 import React from 'react';
 import { ArrowLeft, Mail, Briefcase, Users, HelpCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Footer from '../../components/Footer';
 
 export default function Contact() {
   const router = useRouter();
@@ -110,6 +111,7 @@ export default function Contact() {
           </div>
         </article>
       </div>
+      <Footer />
     </div>
   );
 } 
