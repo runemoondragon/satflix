@@ -226,7 +226,7 @@ export default function MoviePage() {
                       const paymentData = {
                         movieId: movie.id,
                         movieTitle: movie.title,
-                        amount: '.5',
+                        amount: '.25',
                         currency: 'USD',
                         watchLink: movie.watchLink
                       };

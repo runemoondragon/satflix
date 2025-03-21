@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     // Prepare the invoice data
     const invoiceData = {
-      amount: amount || '0.5',
+      amount: amount || '0.25',
       currency: currency || 'USD',
       metadata: {
         movieId,
