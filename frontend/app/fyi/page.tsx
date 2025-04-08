@@ -89,7 +89,7 @@ export default function FYI() {
             </div>
 
             <p className="text-gray-700 mb-6">
-              While our redirection system bypass and removes most of the barriers, some third-party sites may still hidden one more pop-up on a play button. If this happens:
+              While our redirection system bypass and removes most of the barriers, some third-party sites may still trigger a final pop-up on a play button. If this happens:
             </p>
 
             <ul className="space-y-3">

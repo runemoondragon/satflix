@@ -28,7 +28,7 @@ export default function OurCase() {
       <div className="max-w-3xl mx-auto px-6 py-24 flex-grow">
         <article className="prose prose-orange mx-auto">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
-            A Love Letter to the Lawmakers and Content Owners: Why We Should Exist
+          VOOOMO: Why We Exist 
           </h1>
           
           <p className="text-gray-700 mb-8">Dear Guardians of Creativity and Digital Fairness,</p>

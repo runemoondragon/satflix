@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Play, Star, Clock, Globe, Users, ChevronLeft, Camera, ChevronDown } from 'lucide-react';
+import { Play, Star, Clock, Globe, Users, ChevronLeft, Camera, ChevronDown, Info } from 'lucide-react';
 import Like from './like';
 import Footer from '../../../components/Footer';
 
@@ -23,6 +23,47 @@ interface Movie {
   production?: string;
 }
 
+interface InfoModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const InfoModal: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div 
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      
+      <div className="relative z-10 bg-gray-900 rounded-lg max-w-md w-full p-4 md:p-6 shadow-xl">
+        <h3 className="text-white text-sm md:text-base font-medium mb-3">
+          Quick Heads-Up Before You Pay
+        </h3>
+        <div className="text-gray-300 text-xs md:text-sm space-y-3">
+          <p>
+            After payment, you'll be redirected to a third-party movie player.
+          </p>
+          <p>
+            We've removed most pop-ups and spam — but you may still see one final ad or pop-up when clicking play. Just close it and enjoy the show.
+          </p>
+          <p>
+            Vooomo does not host or control the movie. We simply streamline your access and protect your experience.
+          </p>
+        </div>
+        <button
+          onClick={onClose}
+          className="mt-4 text-xs md:text-sm text-white bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-full transition-colors"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  );
+};
+
 export default function MoviePage() {
   const params = useParams();
   const router = useRouter();
@@ -33,6 +74,7 @@ export default function MoviePage() {
   const [loading, setLoading] = useState(true);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [isMetadataExpanded, setIsMetadataExpanded] = useState(false);
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
   useEffect(() => {
     if (!formattedTitle) return;
@@ -212,85 +254,94 @@ export default function MoviePage() {
             {/* Action Buttons */}
             <div className="flex flex-wrap justify-center md:justify-start gap-3 md:gap-4 pt-2 md:pt-4">
               {movie?.watchLink && movie?.id ? (
-                <button
-                  onClick={async () => {
-                    try {
-                      setPaymentLoading(true);
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={async () => {
+                      try {
+                        setPaymentLoading(true);
 
-                      // Pre-validate data before making the request
-                      if (!movie.id || !movie.title || !movie.watchLink) {
-                        throw new Error('Missing movie data');
+                        // Pre-validate data before making the request
+                        if (!movie.id || !movie.title || !movie.watchLink) {
+                          throw new Error('Missing movie data');
+                        }
+
+                        // Prepare request data
+                        const paymentData = {
+                          movieId: movie.id,
+                          movieTitle: movie.title,
+                          amount: '.25',
+                          currency: 'USD',
+                          watchLink: movie.watchLink
+                        };
+
+                        // Use AbortController for timeout
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+                        const response = await fetch('/api/payments', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify(paymentData),
+                          signal: controller.signal
+                        });
+
+                        clearTimeout(timeoutId);
+
+                        if (!response.ok) {
+                          const errorData = await response.json();
+                          throw new Error(errorData.error || 'Failed to create invoice');
+                        }
+
+                        const data = await response.json();
+                        
+                        if (!data.checkoutLink) {
+                          throw new Error('No checkout link received');
+                        }
+
+                        // Preload the checkout page
+                        const preloadLink = document.createElement('link');
+                        preloadLink.rel = 'preload';
+                        preloadLink.as = 'document';
+                        preloadLink.href = data.checkoutLink;
+                        document.head.appendChild(preloadLink);
+
+                        // Short delay to allow preload to start
+                        await new Promise(resolve => setTimeout(resolve, 100));
+
+                        // Redirect to checkout
+                        window.location.href = data.checkoutLink;
+                      } catch (error: any) {
+                        console.error('Payment error:', error);
+                        alert(error.message || 'Failed to initiate payment. Please try again.');
+                      } finally {
+                        setPaymentLoading(false);
                       }
-
-                      // Prepare request data
-                      const paymentData = {
-                        movieId: movie.id,
-                        movieTitle: movie.title,
-                        amount: '.25',
-                        currency: 'USD',
-                        watchLink: movie.watchLink
-                      };
-
-                      // Use AbortController for timeout
-                      const controller = new AbortController();
-                      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-
-                      const response = await fetch('/api/payments', {
-                        method: 'POST',
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(paymentData),
-                        signal: controller.signal
-                      });
-
-                      clearTimeout(timeoutId);
-
-                      if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || 'Failed to create invoice');
-                      }
-
-                      const data = await response.json();
-                      
-                      if (!data.checkoutLink) {
-                        throw new Error('No checkout link received');
-                      }
-
-                      // Preload the checkout page
-                      const preloadLink = document.createElement('link');
-                      preloadLink.rel = 'preload';
-                      preloadLink.as = 'document';
-                      preloadLink.href = data.checkoutLink;
-                      document.head.appendChild(preloadLink);
-
-                      // Short delay to allow preload to start
-                      await new Promise(resolve => setTimeout(resolve, 100));
-
-                      // Redirect to checkout
-                      window.location.href = data.checkoutLink;
-                    } catch (error: any) {
-                      console.error('Payment error:', error);
-                      alert(error.message || 'Failed to initiate payment. Please try again.');
-                    } finally {
-                      setPaymentLoading(false);
-                    }
-                  }}
-                  disabled={paymentLoading}
-                  className="flex items-center gap-1.5 md:gap-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-500/50 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-medium transition-colors"
-                >
-                  {paymentLoading ? (
-                    <>
-                      <div className="w-3 h-3 md:w-4 md:h-4 border-2 md:border-3 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Processing...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Play className="w-3 h-3 md:w-4 md:h-4" />
-                      <span>Watch Now</span>
-                    </>
-                  )}
-                </button>
+                    }}
+                    disabled={paymentLoading}
+                    className="flex items-center gap-1.5 md:gap-2 bg-orange-500 hover:bg-orange-600 disabled:bg-orange-500/50 text-white px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-medium transition-colors"
+                  >
+                    {paymentLoading ? (
+                      <>
+                        <div className="w-3 h-3 md:w-4 md:h-4 border-2 md:border-3 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3 h-3 md:w-4 md:h-4" />
+                        <span>Watch Now</span>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setIsInfoModalOpen(true)}
+                    className="text-gray-400 hover:text-white transition-colors"
+                    title="Important information about playback"
+                  >
+                    <Info className="w-3 h-3 md:w-4 md:h-4" />
+                  </button>
+                </div>
               ) : null}
             </div>
           </div>
@@ -302,6 +353,10 @@ export default function MoviePage() {
         </div>
       </div>
       <Footer />
+      <InfoModal 
+        isOpen={isInfoModalOpen}
+        onClose={() => setIsInfoModalOpen(false)}
+      />
     </div>
   );
 }
