@@ -1,13 +1,12 @@
 **VOOOMO: SIMPLE AGREEMENT FOR FUTURE EQUITY (SAFE) + TOKEN WARRANT**
 
 **Project:** Vooomo  
-**Issuer:** Vooomo (to be incorporated)  
-**Contributor:** Wallet ID: `bc1p2q6qtpam8tsrsfkuumh7wduxl2j83rzf6l2u9wl09hw90thapxrqelakf2`  
+**Issuer:** Vooomo (to be incorporated)   
 ---
 
 ### 1. Purpose
 
-This SAFE represents a convertible, non-debt contribution by the **Contributor** to support the development of Vooomo, a Bitcoin-native media platform. In addition to equity rights, the Contributor is granted a **Token Warrant**, entitling them to receive a proportional share of the native token ($VOO) upon issuance.
+This SAFE represents a convertible, non-debt contribution by the **Contributor** to support the development of Vooomo, a Bitcoin-native media platform. In addition to equity rights, the Contributor is granted a **Token Warrant**, entitling them to receive a proportional share of the native Vooomo token upon issuance.
 
 ---
 
@@ -15,8 +14,8 @@ This SAFE represents a convertible, non-debt contribution by the **Contributor**
 
 The Contributor provides **BTC (Bitcoin)** to support the development and operation of the Vooomo platform.
 
-- **BTC Receiving Address / LN Invoice ID:** [insert]
-- Transaction hash or LN proof must be recorded in the Contributor Ledger.
+- **BTC Receiving Address / LN Invoice ID:**
+- Transaction hash or LN proof will be recorded for all contributon.
 
 ---
 
@@ -72,19 +71,19 @@ A Tier 1 contributor inscribes a $1,000 contribution under a $5M valuation cap. 
 
 - **An equity share reflecting the $5M cap**
 - **A token allocation of 20,000 $VOO**, based on the calculation:
-  \[(1,000 × 100,000,000) / 5,000,000 = 20,000 $VOO\]
+  \[(1,000 × 100,000,000) / 5,000,000 = 20,000 Tokens]
 
 If a contributor joins later under Tier 2, with a $500 contribution at a $7.5M cap, they receive:
 
 - **Reduced equity rights (0.5x SAFE)**
 - **A token allocation of 6,666 $VOO**, calculated as:
-  \[(500 × 100,000,000) / 7,500,000 = 6,666 $VOO\]
+  \[(500 × 100,000,000) / 7,500,000 = 6,666 Tokens]
 
 And for Tier 3, a $250 contribution at a $10M cap results in:
 
 - **Quarter SAFE equity rights**
 - **A token allocation of 2,500 $VOO**, calculated as:
-  \[(250 × 100,000,000) / 10,000,000 = 2,500 $VOO\]
+  \[(250 × 100,000,000) / 10,000,000 = 2,500 Tokens]
 
 This structure incentivizes early participation and rewards contributors who commit capital during the most formative phase of the project.
 
@@ -134,10 +133,8 @@ Contributor agrees to participate in future governance mechanisms (e.g. Bitboard
 Wallet ID: `bc1p2q6qtpam8tsrsfkuumh7wduxl2j83rzf6l2u9wl09hw90thapxrqelakf2`  
 Signature (Public Key):  
 `ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAmKNDuI8DPFz1lsRUpL2Pc7jJG+IvUmMgaAD7pX9dcugvfOwixknPm+JItveZFGMe8kOk5jcuf4x49wRqqepIBNZuYp+zOmchB4RiOnWYrMn0WUKqWuWBld36zZ0sBHx/HtXXByxWxUaxjpiXWmjSOOMA/+8vS8X29ncc6+YlQ+IsEqZCzMYfbcBWsb5NgQJirh1SJ3M88lIKFwHVWyrrifptC55fnS2lfdY6k3mN8fEsBxp8bx17YNtu8e92LO6axv1IQ8g/RZnFuiUkU7mkSgmbLplC7F9Cj6GmaSxw6e+sF/6TxtzKDHhUZ49qBm8WevMuDB4BKVJTrza+tHfCsw== rsa-key-20210729`  
-Date: April 7, 2025
 
-**Vooomo (Unincorporated Project)**  
-Authorized Rep: BTI    
+Date: April 9, 2025
 
 end.
 
@@ -151,4 +148,4 @@ Paste it into the SHA-256 tool at https://andersbrownworth.com/blockchain/hash
 
 Confirm the resulting hash matches the official SHA-256 fingerprint below:
 
-### 📎 SHA-256 Hash of this Document: 437edcda9f99774abf4f4ee087b0bb6e091919bf164b24285a2289a110af5b8d
+### 📎 SHA-256 Hash of this Document: 64e29d587995d4b2123603d8b8ef10376dbd925e9e2c1e7b9c8660186435f512
