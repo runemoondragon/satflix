@@ -148,4 +148,4 @@ Paste it into the SHA-256 tool at https://andersbrownworth.com/blockchain/hash
 
 Confirm the resulting hash matches the official SHA-256 fingerprint below:
 
-### 📎 SHA-256 Hash of this Document: 64e29d587995d4b2123603d8b8ef10376dbd925e9e2c1e7b9c8660186435f512
+### 📎 SHA-256 Hash of this Document: 146f7f721e4f31e442feb16358431a175c25016af398598bffab5a022bd366f1
