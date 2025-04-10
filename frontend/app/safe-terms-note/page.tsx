@@ -130,7 +130,7 @@ end.`;
           <section>
             <h2 className="text-xl font-semibold text-white mb-4">1. Purpose</h2>
             <p className="text-gray-300 leading-relaxed">
-              This SAFE represents a convertible, non-debt contribution by the Contributor to support the development of Vooomo, a Bitcoin-native media platform. In addition to equity rights, the Contributor is granted a Token Warrant, entitling them to receive a proportional share of the native token ($VOO) upon issuance.
+              This SAFE represents a convertible, non-debt contribution by the Contributor to support the development of Vooomo, a Bitcoin-native media platform. In addition to equity rights, the Contributor is granted a Token Warrant, entitling them to receive a proportional share of the native Vooomo token upon issuance.
             </p>
           </section>
 
@@ -268,10 +268,10 @@ end.`;
                     </svg>
                   </a>
                 </li>
-                <li>Confirm the resulting hash matches the official SHA-256 fingerprint below:</li>
+                <li>Confirm the resulting hash matches the official SHA-256 fingerprint on the Certificate inscription and below:</li>
               </ol>
               <div className="mt-4 p-4 bg-gray-800 rounded font-mono text-sm break-all">
-                SHA-256 Hash of this Document: 64e29d587995d4b2123603d8b8ef10376dbd925e9e2c1e7b9c8660186435f512
+                SHA-256 Hash of SAFE Document: 64e29d587995d4b2123603d8b8ef10376dbd925e9e2c1e7b9c8660186435f512
               </div>
             </div>
           </section>

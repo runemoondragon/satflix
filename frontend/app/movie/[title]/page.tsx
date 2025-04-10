@@ -44,10 +44,10 @@ const InfoModal: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
         </h3>
         <div className="text-gray-300 text-xs md:text-sm space-y-3">
           <p>
-            After payment, you'll be redirected to a third-party movie player.
+            After payment, you'll be redirected to a third-party movie player for this content.
           </p>
           <p>
-            We've removed most pop-ups and spam — but you may still see one final ad or pop-up when clicking play. Just close it and enjoy the show.
+            We've removed most pop-ups and spam — but you may still see one final ad or pop-up. Just close it and enjoy the movie.
           </p>
           <p>
             Vooomo does not host or control the movie. We simply streamline your access and protect your experience.
