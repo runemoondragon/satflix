@@ -135,10 +135,6 @@ export default function OurCase() {
               <span className="text-blue-500">🔹</span>
               <span className="text-gray-700">Would you rather keep fighting the same legal battles over and over, with no end in sight?</span>
             </li>
-            <li className="flex items-start gap-3">
-              <span className="text-blue-500">🔹</span>
-              <span className="text-gray-700">Or would you rather stand with us, take back control, uno reverse, and reclaim what's rightfully yours?</span>
-            </li>
           </ul>
           
           <p className="text-gray-700 mb-6">
