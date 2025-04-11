@@ -23,14 +23,14 @@ export default function Footer() {
             <Link href="/terms" className="text-gray-400 hover:text-orange-500 transition-colors">
             Terms of service
             </Link>
-            <Link href="/docs" className="text-gray-400 hover:text-orange-500 transition-colors">
-            Docs
-            </Link>
             <Link href="/contact" className="text-gray-400 hover:text-orange-500 transition-colors">
             Contact
             </Link>
             <Link href="/our-case" className="text-gray-400 hover:text-orange-500 transition-colors">
             Our Case
+            </Link>
+            <Link href="https://invest.vooomo.com/" target="_blank" className="text-gray-400 hover:text-orange-500 transition-colors">
+            Docs
             </Link>
             <Link href="/fyi" className="text-gray-400 hover:text-orange-500 transition-colors">
               FYI
