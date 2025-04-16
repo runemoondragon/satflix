@@ -33,7 +33,7 @@ export default function FYI() {
 
           <div className="bg-orange-50 border border-orange-100 rounded-lg p-6 mb-8">
             <p className="text-gray-700">
-            When you access a movie through our platform, we redirect you directly to the movie player on a third-party site, bypassing the layers of intrusive ads, trackers, and spam that usually make accessing free streaming content frustrating.
+            We are on phase one in our development, when you access a movie through our platform, we redirect you directly to the movie player on a third-party site, bypassing the layers of intrusive ads, trackers, and spam that usually make accessing free streaming content frustrating.
             </p>
           </div>
 
@@ -106,7 +106,7 @@ export default function FYI() {
 
           <div className="mt-12 border-t border-gray-200 pt-8">
             <p className="text-gray-700 text-sm italic">
-              We exist to streamline access, protect your privacy, and remove unnecessary hurdles.
+              Streamline access, protect your privacy, and remove unnecessary hurdles.
             </p>
           </div>
         </article>

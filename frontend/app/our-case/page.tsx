@@ -144,7 +144,7 @@ export default function OurCase() {
           Let us flip the script—instead of piracy sites profiting off your content, we ensure that you collect revenue from every view. 
           </p>
           <p className="text-gray-700 mb-8">
-            A future where creators, filmmakers, and streaming platforms thrive—without middlemen, without exploitation, and without borders.
+            let's create a future where creators, filmmakers, and streaming platforms thrive—without middlemen, without exploitation, and without borders.
           </p>
 
           <p className="text-gray-700 mb-6">
@@ -152,8 +152,8 @@ export default function OurCase() {
           </p>
 
           <div className="mt-12 text-gray-700">
-            <p>With all respect and a vision for a better digital future,</p>
-            <p className="mt-4">Your Reluctant Ally in the Fight Against Piracy,</p>
+            <p>With a vision for a better digital future.</p>
+            
             <p className="font-bold text-orange-500 mt-2">VOOOMO</p>
           </div>
         </article>
