@@ -50,7 +50,6 @@ export default function TermsOfService() {
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>Users must be at least 18 years old or have parental consent.</li>
               <li>Users are responsible for ensuring that they comply with local laws regarding online streaming.</li>
-              <li>Users may not use the Platform for illegal activities, including copyright infringement.</li>
             </ul>
           </section>
 
@@ -82,7 +81,6 @@ export default function TermsOfService() {
             <h2 className="text-xl font-bold text-gray-900 mb-4">7. Modifications & Termination</h2>
             <ul className="list-disc pl-6 text-gray-700 space-y-2">
               <li>We reserve the right to modify these Terms of Service at any time.</li>
-              <li>Violation of these terms may result in account termination.</li>
             </ul>
           </section>
 
