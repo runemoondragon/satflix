@@ -182,9 +182,9 @@ export default function Navigation() {
               <Film className="w-3 h-3" />
               <span>Movies</span>
             </Link>
-            <Link href="#" className="hover:text-orange-500 transition-colors flex items-center gap-2">
+            <Link href="https://tv.vooomo.com/" target="_blank" className="hover:text-orange-500 transition-colors flex items-center gap-2">
               <Tv className="w-3 h-3" />
-              <span>TV Shows</span>
+              <span>Live Tv</span>
             </Link>
           </div>
 
@@ -375,7 +375,7 @@ export default function Navigation() {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <Tv className="w-4 h-4" />
-              <span>TV Shows</span>
+              <span>TV</span>
             </Link>
           </div>
         </div>

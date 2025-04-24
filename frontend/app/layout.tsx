@@ -8,7 +8,7 @@ import Navigation from '../components/Navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Vooomo',
+  title: 'Vooomo Movies',
   description: 'Watch movies from multiple platforms in one place',
   manifest: '/manifest.json',
   icons: {
