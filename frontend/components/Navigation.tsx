@@ -370,12 +370,12 @@ export default function Navigation() {
               <span>Movies</span>
             </Link>
             <Link 
-              href="#" 
+              href="https://tv.vooomo.com/" 
               className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-800 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <Tv className="w-4 h-4" />
-              <span>TV</span>
+              <span>Live Tv</span>
             </Link>
           </div>
         </div>
