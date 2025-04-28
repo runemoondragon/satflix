@@ -16,6 +16,8 @@ The Contributor provides **BTC (Bitcoin)** to support the development and operat
 
 - **BTC Receiving Address / LN Invoice ID:**
 - Transaction hash or LN proof will be recorded for all contributon.
+- Contribution rights are tied directly to the holding of the corresponding inscription (SAFE certificate) on the Bitcoin blockchain.
+- Whoever controls the inscription controls the associated SAFE and Token Warrant rights. Ownership is determined by inscription possession.
 
 ---
 
